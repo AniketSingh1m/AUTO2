@@ -44,28 +44,43 @@ jobs:
               // Now, merge br2 into main
               const { exec } = require('child_process');
               
-              // Checkout main branch
-              exec('git checkout main', (error) => {
+              // Set Git identity
+              exec('git config --global user.email "action@github.com"', (error) => {
                 if (error) {
-                  console.error(`Error checking out main: ${error.message}`);
+                  console.error(`Error setting git email: ${error.message}`);
                   return;
                 }
-                
-                // Merge origin/br2 into main
-                exec('git merge --no-ff origin/br2', (error) => {
+
+                exec('git config --global user.name "GitHub Action"', (error) => {
                   if (error) {
-                    console.error(`Error merging origin/br2 into main: ${error.message}`);
+                    console.error(`Error setting git name: ${error.message}`);
                     return;
                   }
-                  
-                  // Push changes to main
-                  exec('git push origin main', (error) => {
+
+                  // Checkout main branch
+                  exec('git checkout main', (error) => {
                     if (error) {
-                      console.error(`Error pushing to main: ${error.message}`);
+                      console.error(`Error checking out main: ${error.message}`);
                       return;
                     }
                     
-                    console.log('br2 merged into main successfully.');
+                    // Merge origin/br2 into main
+                    exec('git merge --no-ff origin/br2', (error) => {
+                      if (error) {
+                        console.error(`Error merging origin/br2 into main: ${error.message}`);
+                        return;
+                      }
+                      
+                      // Push changes to main
+                      exec('git push origin main', (error) => {
+                        if (error) {
+                          console.error(`Error pushing to main: ${error.message}`);
+                          return;
+                        }
+                        
+                        console.log('br2 merged into main successfully.');
+                      });
+                    });
                   });
                 });
               });

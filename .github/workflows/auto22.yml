@@ -51,10 +51,10 @@ jobs:
                   return;
                 }
                 
-                // Merge br2 into main
-                exec('git merge --no-ff br2', (error) => {
+                // Merge origin/br2 into main
+                exec('git merge --no-ff origin/br2', (error) => {
                   if (error) {
-                    console.error(`Error merging br2 into main: ${error.message}`);
+                    console.error(`Error merging origin/br2 into main: ${error.message}`);
                     return;
                   }
                   
